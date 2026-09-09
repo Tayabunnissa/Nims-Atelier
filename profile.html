@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile | Nim's Atelier</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:Georgia,"Times New Roman",serif;background:#faf6f0;color:#2b2020;line-height:1.6}
+a{text-decoration:none;color:inherit}
+button,input,select{font-family:inherit}
+:root{--cream:#faf6f0;--brown:#4b342c;--dark:#241a19;--gold:#b58a52;--gold-light:#d9b77d;--text-light:#756862;--border:#dfd0c2}
+
+/* === HEADER - EXACT COPY FROM HOME === */
+.navbar{position:sticky;top:0;z-index:1000;min-height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 6%;background:rgba(255,255,255,.97);border-bottom:1px solid rgba(181,138,82,.25);backdrop-filter:blur(10px)}
+.logo{justify-self:start;font-size:25px;letter-spacing:3px;font-weight:bold;color:var(--brown);white-space:nowrap}
+.logo span{color:var(--gold);font-weight:normal}
+.logo a{display:block;color:inherit}
+.nav-links{justify-self:center;display:flex;align-items:center;gap:30px;list-style:none}
+.nav-links li{list-style:none}
+.nav-links a{position:relative;display:block;font-family:Arial,sans-serif;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:1.5px;color:#382b28;transition:.3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-7px;width:0;height:1px;background:var(--gold);transition:.3s}
+.nav-links a:hover{color:var(--gold)} .nav-links a:hover::after{width:100%}
+.nav-actions{justify-self:end;display:flex;align-items:center;gap:8px}
+.signin-button,.cart-button,.profile-button{font-family:Arial,sans-serif;cursor:pointer;transition:.3s}
+.signin-button,.cart-button{padding:10px 17px;font-size:12px;letter-spacing:1px}
+.signin-button{background:transparent;color:var(--brown);border:1px solid var(--brown)}
+.signin-button:hover{background:var(--brown);color:white}
+.profile-button{width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--brown);border:1px solid var(--brown);font-size:17px}
+.profile-button:hover{background:var(--brown);color:white}
+.cart-button{background:var(--dark);color:white;border:1px solid var(--dark)}
+.cart-button:hover{background:var(--gold);border-color:var(--gold)}
+
+/* PROFILE CONTENT */
+.profile-page{min-height:80vh;display:flex;justify-content:center;align-items:center;padding:60px 20px}
+.profile-box{width:min(580px,100%);background:white;border:1px solid var(--border);padding:40px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+.profile-heading{text-align:center;margin-bottom:28px}
+.profile-heading small{color:var(--gold);text-transform:uppercase;letter-spacing:3px;font-family:Arial,sans-serif;font-size:11px}
+.profile-heading h1{font-size:36px;font-weight:normal;color:var(--brown);margin-top:8px}
+.profile-form{display:grid;gap:10px}
+.profile-form label{font-family:Arial,sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#665b55;margin-top:6px}
+.profile-form input,.profile-form select{width:100%;padding:13px;border:1px solid #d6c8bc;outline:none;font-size:14px;background:white}
+.profile-form input:focus,.profile-form select:focus{border-color:var(--gold)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-submit{width:100%;padding:14px;margin-top:12px;background:var(--dark);color:white;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:.3s}
+.form-submit:hover{background:var(--gold)}
+.switch-button{background:none;border:none;color:var(--gold);cursor:pointer;margin-top:15px;text-decoration:underline}
+.message{text-align:center;margin-top:15px;font-size:13px} .success{color:#708c65} .error{color:#a33a3a}
+.account{display:none;text-align:center} .account.active{display:block}
+.account-icon{width:75px;height:75px;border-radius:50%;background:var(--brown);color:white;display:flex;justify-content:center;align-items:center;margin:0 auto 20px;font-size:32px}
+.account h2{font-size:30px;font-weight:normal;color:var(--brown);margin-bottom:20px}
+.account-details{background:#f7eee6;border:1px solid var(--border);padding:20px;text-align:left;margin-bottom:20px}
+.account-details p{margin:8px 0;color:#665b55;font-size:14px} .account-details strong{color:var(--brown)}
+
+/* === FOOTER - EXACT COPY FROM HOME === */
+footer{background:#241a19;color:white;padding:70px 6% 25px}
+.footer-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px}
+footer h3{color:#dfb97d;margin-bottom:17px;font-size:18px;font-weight:normal}
+footer p,footer li{color:#cfc4be;font-size:14px;line-height:1.7}
+footer ul{list-style:none} footer li{margin:8px 0}
+footer a{color:#cfc4be;transition:.3s} footer a:hover{color:#dfb97d}
+.social-links{display:flex;align-items:center;gap:14px;margin-top:18px}
+.social-link{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border:1px solid #76645c;border-radius:50%;color:white;background:transparent;transition:.3s}
+.social-link:hover{background:var(--gold);border-color:var(--gold);transform:translateY(-3px)}
+.copyright{text-align:center;border-top:1px solid #443633;margin-top:55px;padding-top:20px;color:#988d88;font-family:Arial,sans-serif;font-size:11px;letter-spacing:.5px}
+@media(max-width:1000px){.nav-links{gap:16px}.nav-links a{font-size:10px}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:750px){.navbar{min-height:75px;padding:15px 5%;display:grid;grid-template-columns:1fr auto;gap:15px}.logo{justify-self:start;font-size:21px}.nav-actions{justify-self:end;margin-left:0}.nav-links{grid-column:1 / -1;justify-self:center;order:3;width:100%;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px 18px;padding-top:5px}.footer-grid{grid-template-columns:1fr;gap:35px}}
+@media(max-width:450px){.signin-button,.cart-button{padding:8px 10px;font-size:10px}.profile-button{width:32px;height:32px;font-size:14px}.nav-links{gap:10px 14px}.nav-links a{font-size:9px}.form-row{grid-template-columns:1fr}.profile-box{padding:25px 18px}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo"><a href="index.html">NIM'S <span>ATELIER</span></a></div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+        <button class="signin-button" type="button" onclick="window.location.href='index.html#signin'">♡ Sign In</button>
+        <button class="profile-button" type="button" onclick="window.location.href='profile.html'">👤</button>
+        <button class="cart-button" type="button" onclick="window.location.href='shop.html'">🛍 Cart (<span id="cartCount">0</span>)</button>
+    </div>
+</nav>
+
+<section class="profile-page">
+<div class="profile-box">
+
+<div id="loginSection">
+    <div class="profile-heading"><small>Nim's Atelier</small><h1>Welcome Back</h1></div>
+    <form class="profile-form" id="loginForm">
+        <label>Email Address</label><input type="email" id="loginEmail" placeholder="Enter your email" required>
+        <label>Password</label><input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <button type="submit" class="form-submit">Login</button>
+    </form>
+    <div class="message" id="loginMessage"></div>
+    <div style="text-align:center;"><button class="switch-button" type="button" onclick="showRegister()">Don't have an account? Create one</button></div>
+</div>
+
+<div id="registerSection" style="display:none;">
+    <div class="profile-heading"><small>Nim's Atelier</small><h1>Create Account</h1></div>
+    <form class="profile-form" id="registerForm">
+        <label>Full Name</label><input type="text" id="registerName" placeholder="Enter your full name" required>
+        <label>Email Address</label><input type="email" id="registerEmail" placeholder="Enter your email" required>
+        <label>Phone Number</label><input type="tel" id="registerPhone" placeholder="Enter your phone number" required>
+        <label>Delivery Address</label><input type="text" id="registerAddress" placeholder="House no, Street, Area" required>
+        <div class="form-row">
+            <div><label>City</label><input type="text" id="registerCity" placeholder="City" required></div>
+            <div><label>Pincode</label><input type="text" id="registerPincode" placeholder="6-digit pincode" pattern="[0-9]{6}" maxlength="6" required></div>
+        </div>
+        <label>State</label>
+        <select id="registerState" required>
+            <option value="" disabled selected>Select State</option>
+            <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option><option>Delhi</option><option>Jammu and Kashmir</option>
+        </select>
+        <label>Password</label><input type="password" id="registerPassword" placeholder="Create a password" required>
+        <label>Confirm Password</label><input type="password" id="registerConfirmPassword" placeholder="Confirm your password" required>
+        <button type="submit" class="form-submit">Create Account</button>
+    </form>
+    <div class="message" id="registerMessage"></div>
+    <div style="text-align:center;"><button class="switch-button" type="button" onclick="showLogin()">Already have an account? Login</button></div>
+</div>
+
+<div class="account" id="accountSection">
+    <div class="account-icon">♡</div><h2>My Profile</h2>
+    <div class="account-details">
+        <p><strong>Name:</strong> <span id="accountName"></span></p>
+        <p><strong>Email:</strong> <span id="accountEmail"></span></p>
+        <p><strong>Phone:</strong> <span id="accountPhone"></span></p>
+        <p><strong>Address:</strong> <span id="accountAddress"></span></p>
+        <p><strong>City:</strong> <span id="accountCity"></span></p>
+        <p><strong>Pincode:</strong> <span id="accountPincode"></span></p>
+        <p><strong>State:</strong> <span id="accountState"></span></p>
+    </div>
+    <button class="form-submit" type="button" onclick="logout()">Logout</button>
+</div>
+
+</div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="footer-brand">NIM'S <span>ATELIER</span></div>
+            <p>Pakistani-inspired fashion, thoughtfully curated for women across India.</p><br><p>Elegant. Timeless. Effortlessly Yours.</p>
+            <div class="social-links">
+                <a href="https://instagram.com/nimsatelier" target="_blank" class="social-link">◎</a>
+                <a href="https://wa.me/919999999999" target="_blank" class="social-link">☎</a>
+            </div>
+        </div>
+        <div><h3>Shop</h3><ul><li><a href="shop.html">Bridal Wear</a></li><li><a href="shop.html">Party Wear</a></li><li><a href="shop.html">Casual Wear</a></li></ul></div>
+        <div><h3>Our Policies</h3><ul><li><a href="policy.html#shipping">Shipping & Delivery</a></li><li><a href="policy.html#payment">Payment Options</a></li><li><a href="policy.html#privacy">Privacy Policy</a></li><li><a href="policy.html#refunds">Refund Policy</a></li><li><a href="policy.html#terms">Terms of Service</a></li><li><a href="policy.html#faq">FAQ</a></li></ul></div>
+        <div><h3>Customer Care</h3><ul><li><a href="contact.html">Contact Us</a></li><li><a href="track-order.html">Track Order</a></li><li><a href="profile.html">My Profile</a></li></ul></div>
+    </div>
+    <div class="copyright">© 2026 Nim's Atelier. All Rights Reserved.</div>
+</footer>
+
+<script>
+function getAccounts(){return JSON.parse(localStorage.getItem("nimsAccounts"))||[];}
+function showRegister(){document.getElementById("loginSection").style.display="none";document.getElementById("registerSection").style.display="block";}
+function showLogin(){document.getElementById("registerSection").style.display="none";document.getElementById("loginSection").style.display="block";}
+document.getElementById("registerForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ const name=document.getElementById("registerName").value.trim();
+ const email=document.getElementById("registerEmail").value.trim().toLowerCase();
+ const phone=document.getElementById("registerPhone").value.trim();
+ const address=document.getElementById("registerAddress").value.trim();
+ const city=document.getElementById("registerCity").value.trim();
+ const pincode=document.getElementById("registerPincode").value.trim();
+ const state=document.getElementById("registerState").value;
+ const password=document.getElementById("registerPassword").value;
+ const confirmPassword=document.getElementById("registerConfirmPassword").value;
+ const message=document.getElementById("registerMessage");
+ if(password!==confirmPassword){message.textContent="Passwords do not match.";message.className="message error";return;}
+ if(!/^[0-9]{6}$/.test(pincode)){message.textContent="Enter valid 6-digit pincode.";message.className="message error";return;}
+ let accounts=getAccounts();if(accounts.find(a=>a.email===email)){message.textContent="Account exists.";message.className="message error";return;}
+ accounts.push({name,email,phone,address,city,pincode,state,password});
+ localStorage.setItem("nimsAccounts",JSON.stringify(accounts));
+ localStorage.setItem("nimsLoggedInUser",email);
+ message.textContent="Account created!";message.className="message success";setTimeout(showAccount,500);
+});
+document.getElementById("loginForm").addEventListener("submit",function(e){
+ e.preventDefault();const email=document.getElementById("loginEmail").value.trim().toLowerCase();const password=document.getElementById("loginPassword").value;const message=document.getElementById("loginMessage");const acc=getAccounts().find(u=>u.email===email&&u.password===password);
+ if(!acc){message.textContent="Incorrect email or password.";message.className="message error";return;}
+ localStorage.setItem("nimsLoggedInUser",email);message.textContent="Login successful!";message.className="message success";setTimeout(showAccount,500);
+});
+function showAccount(){
+ const email=localStorage.getItem("nimsLoggedInUser");if(!email)return;const account=getAccounts().find(u=>u.email===email);if(!account)return;
+ document.getElementById("loginSection").style.display="none";document.getElementById("registerSection").style.display="none";document.getElementById("accountSection").classList.add("active");
+ document.getElementById("accountName").textContent=account.name;
+ document.getElementById("accountEmail").textContent=account.email;
+ document.getElementById("accountPhone").textContent=account.phone;
+ document.getElementById("accountAddress").textContent=account.address;
+ document.getElementById("accountCity").textContent=account.city||"-";
+ document.getElementById("accountPincode").textContent=account.pincode||"-";
+ document.getElementById("accountState").textContent=account.state||"-";
+}
+function logout(){localStorage.removeItem("nimsLoggedInUser");location.reload();}
+window.addEventListener("DOMContentLoaded",function(){
+ if(localStorage.getItem("nimsLoggedInUser"))showAccount();
+ let savedCart=JSON.parse(localStorage.getItem("nimsCart")||"[]");
+ document.getElementById("cartCount").textContent=savedCart.reduce((a,b)=>a+b.qty,0);
+});
+</script>
+</body>
+</html>

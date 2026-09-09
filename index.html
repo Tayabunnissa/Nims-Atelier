@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nim's Atelier | Pakistani Fashion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px
+        }
+
+        body {
+            font-family: Georgia, "Times New Roman", serif;
+            background: #faf6f0;
+            color: #2b2020;
+            line-height: 1.6
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        button,
+        input {
+            font-family: inherit
+        }
+
+        :root {
+            --cream: #faf6f0;
+            --brown: #4b342c;
+            --dark: #241a19;
+            --gold: #b58a52;
+            --gold-light: #d9b77d;
+            --text-light: #756862;
+            --border: #dfd0c2
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            min-height: 78px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 0 6%;
+            background: rgba(255, 255, 255, .97);
+            border-bottom: 1px solid rgba(181, 138, 82, .25);
+            backdrop-filter: blur(10px)
+        }
+
+        .logo {
+            justify-self: start;
+            font-size: 25px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            color: var(--brown);
+            white-space: nowrap
+        }
+
+        .logo span {
+            color: var(--gold);
+            font-weight: normal
+        }
+
+        .logo a {
+            display: block;
+            color: inherit
+        }
+
+        .nav-links {
+            justify-self: center;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none
+        }
+
+        .nav-links li {
+            list-style: none
+        }
+
+        .nav-links a {
+            position: relative;
+            display: block;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #382b28;
+            transition: .3s
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -7px;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: .3s
+        }
+
+        .nav-links a:hover {
+            color: var(--gold)
+        }
+
+        .nav-links a:hover::after {
+            width: 100%
+        }
+
+        .nav-actions {
+            justify-self: end;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .signin-button,
+        .cart-button,
+        .profile-button {
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .signin-button,
+        .cart-button {
+            padding: 10px 17px;
+            font-size: 12px;
+            letter-spacing: 1px
+        }
+
+        .signin-button {
+            background: transparent;
+            color: var(--brown);
+            border: 1px solid var(--brown)
+        }
+
+        .signin-button:hover {
+            background: var(--brown);
+            color: white
+        }
+
+        .profile-button {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            color: var(--brown);
+            border: 1px solid var(--brown);
+            font-size: 17px
+        }
+
+        .profile-button:hover {
+            background: var(--brown);
+            color: white
+        }
+
+        .cart-button {
+            background: var(--dark);
+            color: white;
+            border: 1px solid var(--dark)
+        }
+
+        .cart-button:hover {
+            background: var(--gold);
+            border-color: var(--gold)
+        }
+
+        /* FIXED HERO - NO MORE BLANK */
+        .hero {
+            min-height: calc(100vh - 78px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            background-color: #3a2a27;
+            background-image: linear-gradient(rgba(35, 24, 23, .42), rgba(35, 24, 23, .62)), url("pictures/bridal-1.jpeg");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+            padding: 40px 25px
+        }
+
+        .hero-small {
+            font-family: Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-size: 12px;
+            color: #f3d6a5
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 9vw, 105px);
+            font-weight: normal;
+            line-height: 1;
+            margin: 25px 0 20px;
+            letter-spacing: 2px
+        }
+
+        .hero-divider {
+            width: 70px;
+            height: 1px;
+            background: var(--gold-light);
+            margin: 25px auto
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            font-size: 19px;
+            color: #f5eeee
+        }
+
+        .hero-button {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 15px 38px;
+            background: var(--gold);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12px;
+            transition: .3s
+        }
+
+        .hero-button:hover {
+            background: white;
+            color: var(--brown);
+            transform: translateY(-2px)
+        }
+
+        .signin-section {
+            padding: 100px 6%;
+            background: linear-gradient(135deg, #eee1d4, #f7eee6)
+        }
+
+        .signin-box {
+            max-width: 850px;
+            margin: auto;
+            padding: 55px 45px;
+            text-align: center;
+            background: white;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(70, 45, 35, .08);
+            position: relative
+        }
+
+        .signin-box::before {
+            content: "";
+            position: absolute;
+            inset: 12px;
+            border: 1px solid rgba(181, 138, 82, .25);
+            pointer-events: none
+        }
+
+        .discount-badge {
+            display: inline-block;
+            padding: 7px 18px;
+            background: var(--gold);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px
+        }
+
+        .signin-box h2 {
+            margin: 20px 0 8px;
+            font-size: 38px;
+            font-weight: normal;
+            color: var(--brown)
+        }
+
+        .signin-box>p {
+            color: var(--text-light)
+        }
+
+        .signin-form {
+            display: flex;
+            max-width: 560px;
+            margin: 28px auto 0;
+            gap: 8px
+        }
+
+        .signin-form input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 1px solid #d6c8bc;
+            outline: none;
+            font-size: 14px
+        }
+
+        .signin-form input:focus {
+            border-color: var(--gold)
+        }
+
+        .signin-form button {
+            padding: 14px 25px;
+            background: var(--dark);
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 12px;
+            transition: .3s
+        }
+
+        .signin-form button:hover {
+            background: var(--gold)
+        }
+
+        #signinMessage {
+            margin-top: 15px;
+            color: #78966f;
+            font-weight: bold
+        }
+
+        .about {
+            padding: 110px 6%;
+            background: var(--cream);
+            text-align: center;
+            position: relative
+        }
+
+        .about-container {
+            max-width: 900px;
+            margin: auto
+        }
+
+        .about-label {
+            font-family: Arial, sans-serif;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 11px
+        }
+
+        .about h2 {
+            font-size: 48px;
+            font-weight: normal;
+            color: var(--brown);
+            margin: 12px 0 25px
+        }
+
+        .about-line {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 0 auto 30px
+        }
+
+        .about p {
+            max-width: 760px;
+            margin: auto;
+            color: #665a54;
+            font-size: 17px;
+            line-height: 1.9
+        }
+
+        .about-button {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 13px 30px;
+            border: 1px solid var(--brown);
+            color: var(--brown);
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: .3s
+        }
+
+        .about-button:hover {
+            background: var(--brown);
+            color: white
+        }
+
+        .boutique-video-section {
+            padding: 110px 6%;
+            background: #fff
+        }
+
+        .boutique-video-grid {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 70px;
+            align-items: center
+        }
+
+        .boutique-video-text {
+            text-align: left
+        }
+
+        .boutique-video-label {
+            font-family: Arial, sans-serif;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 11px
+        }
+
+        .boutique-video-text h2 {
+            font-size: 52px;
+            font-weight: normal;
+            color: var(--brown);
+            line-height: 1.1;
+            margin: 15px 0 25px
+        }
+
+        .boutique-video-text h2 span {
+            font-style: italic;
+            color: var(--gold)
+        }
+
+        .boutique-video-line {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 0 0 25px
+        }
+
+        .boutique-video-text p {
+            color: #665a54;
+            font-size: 17px;
+            line-height: 1.9;
+            margin-bottom: 15px
+        }
+
+        .boutique-video-sub {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-top: 20px
+        }
+
+        .video-wrapper {
+            position: relative;
+            border: 1px solid var(--border);
+            padding: 12px;
+            background: white;
+            box-shadow: 0 25px 70px rgba(70, 45, 35, .12)
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 720px;
+            object-fit: cover
+        }
+
+        .quote-section {
+            padding: 90px 6%;
+            background: #4b342c;
+            color: white;
+            text-align: center
+        }
+
+        .quote-mark {
+            font-size: 60px;
+            color: var(--gold-light);
+            line-height: .5
+        }
+
+        .quote-section p {
+            max-width: 800px;
+            margin: 25px auto;
+            font-size: 28px;
+            font-style: italic;
+            font-weight: normal
+        }
+
+        .quote-section span {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #dfc39a
+        }
+
+        .shop-cta {
+            padding: 100px 6%;
+            text-align: center;
+            background: linear-gradient(rgba(45, 30, 28, .58), rgba(45, 30, 28, .58)), url("pictures/image-1.jpeg") center/cover;
+            color: white
+        }
+
+        .shop-cta small {
+            font-family: Arial, sans-serif;
+            color: #e3bf88;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 11px
+        }
+
+        .shop-cta h2 {
+            font-size: 50px;
+            font-weight: normal;
+            margin: 12px 0
+        }
+
+        .shop-cta p {
+            max-width: 600px;
+            margin: auto;
+            color: #eee3dc
+        }
+
+        footer {
+            background: #241a19;
+            color: white;
+            padding: 70px 6% 25px
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px
+        }
+
+        footer h3 {
+            color: #dfb97d;
+            margin-bottom: 17px;
+            font-size: 18px;
+            font-weight: normal
+        }
+
+        footer p,
+        footer li {
+            color: #cfc4be;
+            font-size: 14px;
+            line-height: 1.7
+        }
+
+        footer ul {
+            list-style: none
+        }
+
+        footer li {
+            margin: 8px 0
+        }
+
+        footer a {
+            color: #cfc4be;
+            transition: .3s
+        }
+
+        footer a:hover {
+            color: #dfb97d
+        }
+
+        .social-links {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 18px
+        }
+
+        .social-link {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #76645c;
+            border-radius: 50%;
+            color: white;
+            background: transparent;
+            transition: .3s
+        }
+
+        .social-link svg {
+            width: 21px;
+            height: 21px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        .social-link:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            transform: translateY(-3px)
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #443633;
+            margin-top: 55px;
+            padding-top: 20px;
+            color: #988d88;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: .5px
+        }
+
+        @media(max-width:1000px) {
+            .nav-links {
+                gap: 16px
+            }
+
+            .nav-links a {
+                font-size: 10px
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .boutique-video-grid {
+                grid-template-columns: 1fr;
+                gap: 40px
+            }
+
+            .boutique-video-text {
+                text-align: center
+            }
+
+            .boutique-video-line {
+                margin: 0 auto 25px
+            }
+        }
+
+        @media(max-width:750px) {
+            .navbar {
+                min-height: 75px;
+                padding: 15px 5%;
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 15px
+            }
+
+            .logo {
+                justify-self: start;
+                font-size: 21px
+            }
+
+            .nav-actions {
+                justify-self: end;
+                margin-left: 0
+            }
+
+            .nav-links {
+                grid-column: 1 / -1;
+                justify-self: center;
+                order: 3;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 12px 18px;
+                padding-top: 5px
+            }
+
+            .hero {
+                min-height: 650px
+            }
+
+            .hero h1 {
+                font-size: 55px
+            }
+
+            .hero p {
+                font-size: 16px
+            }
+
+            .signin-box {
+                padding: 40px 22px
+            }
+
+            .signin-box h2 {
+                font-size: 30px
+            }
+
+            .signin-form {
+                flex-direction: column
+            }
+
+            .about h2,
+            .shop-cta h2,
+            .boutique-video-text h2 {
+                font-size: 36px
+            }
+
+            .quote-section p {
+                font-size: 22px
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 35px
+            }
+        }
+
+        @media(max-width:450px) {
+
+            .signin-button,
+            .cart-button {
+                padding: 8px 10px;
+                font-size: 10px
+            }
+
+            .profile-button {
+                width: 32px;
+                height: 32px;
+                font-size: 14px
+            }
+
+            .hero h1 {
+                font-size: 45px
+            }
+
+            .hero-small {
+                letter-spacing: 3px
+            }
+
+            .nav-links {
+                gap: 10px 14px
+            }
+
+            .nav-links a {
+                font-size: 9px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><a href="index.html">NIM'S <span>ATELIER</span></a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="#about">About</a></li>
+            
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="signin-button" type="button" onclick="window.location.href='#signin'">♡ Sign In</button>
+            <button class="profile-button" type="button" onclick="window.location.href='profile.html'">👤</button>
+            <button class="cart-button" type="button" onclick="window.location.href='shop.html#cart'">🛍 Cart (<span
+                    id="cartCount">0</span>)</button>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-small">Pakistani Luxury Fashion</div>
+            <h1>Nim's Atelier</h1>
+            <div class="hero-divider"></div>
+            <p>Discover the elegance of Pakistani fashion, thoughtfully curated for the modern woman.</p>
+            <a href="shop.html" class="hero-button">Explore Collection</a>
+        </div>
+    </section>
+
+    <section class="signin-section" id="signin">
+        <div class="signin-box">
+            <div class="discount-badge">WELCOME OFFER</div>
+            <h2>A Little Something For You</h2>
+            <p>Sign in to Nim's Atelier and receive <strong>10% off</strong> your first order.</p>
+            <form class="signin-form" id="signinForm">
+                <input type="email" id="signinEmail" placeholder="Enter your email address" required>
+                <button type="submit">Sign In</button>
+            </form>
+            <p id="signinMessage"></p>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-label">Our Story</div>
+            <h2>The Story of Nim's Atelier</h2>
+            <div class="about-line"></div>
+            <p>Nim's Atelier brings the timeless elegance of Pakistani fashion to women across India.</p><br>
+            <p>From exquisite bridal ensembles to sophisticated party wear and graceful everyday pieces, our collection
+                celebrates South Asian craftsmanship, beautiful detailing and timeless style.</p>
+            <a href="shop.html" class="about-button">Discover The Collection</a>
+        </div>
+    </section>
+
+    <section class="boutique-video-section">
+        <div class="boutique-video-grid">
+            <div class="boutique-video-text">
+                <div class="boutique-video-label">The Atelier Experience</div>
+                <h2>Where <span>Tradition</span> Meets Modern Grace</h2>
+                <div class="boutique-video-line"></div>
+                <p>Step into Nim's Atelier, Mysore. Every thread tells a story of heritage, every drape celebrates the
+                    confident woman you are.</p>
+                <p>From our curated racks to your wardrobe — Pakistani luxury, now just a click away.</p>
+                <div class="boutique-video-sub">Crafted in Pakistan • Loved in India</div>
+            </div>
+            <div class="video-wrapper">
+                <video autoplay muted loop playsinline controls poster="pictures/bridal-1.jpeg">
+                    <source src="videos/video-1.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <div class="quote-mark">“</div>
+        <p>Elegance is not about being noticed, it's about being remembered.</p>
+        <span>Nim's Atelier</span>
+    </section>
+
+    <section class="shop-cta">
+        <small>Your Wardrobe Awaits</small>
+        <h2>Find Your Perfect Look</h2>
+        <p>Explore our bridal, party and casual collections, carefully selected for every special moment.</p>
+        <a href="shop.html" class="hero-button">Shop Now</a>
+    </section>
+<!-- MOVING REVIEWS START -->
+<section style="padding:70px 0;background:#fff;overflow:hidden">
+  <div style="text-align:center;margin-bottom:30px">
+    <small style="font-family:Arial,sans-serif;letter-spacing:4px;color:#b58a52;font-size:11px">WHAT OUR CLIENTS SAY</small>
+    <h2 style="font-size:40px;font-weight:normal;margin:10px 0">Customer Reviews</h2>
+  </div>
+
+  <!-- ROW 1 - MOVES LEFT -->
+  <div class="marquee">
+    <div class="marquee-track left">
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"Absolutely loved my bridal sharara! Premium quality."</p><strong>- Nusaiba, Bangalore</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"Dusky Gold lehenga got me so many compliments!"</p><strong>- Sara M., Hyderabad</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★☆</div><p>"Cotton kurtas very comfortable for daily wear."</p><strong>- Zafreen, Delhi</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"Nim's Atelier is now my go-to for festive wear."</p><strong>- Harmain., Mumbai</strong></div>
+      <!-- duplicate for seamless loop -->
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"Absolutely loved my bridal sharara! Premium quality."</p><strong>- Ayesha K., Bangalore</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"Dusky Gold lehenga got me so many compliments!"</p><strong>- Sara M., Hyderabad</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★☆</div><p>"Cotton kurtas very comfortable for daily wear."</p><strong>- Fatima Z., Delhi</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"Nim's Atelier is now my go-to for festive wear."</p><strong>- Zoya A., Mumbai</strong></div>
+    </div>
+  </div>
+
+  <!-- ROW 2 - MOVES RIGHT -->
+  <div class="marquee" style="margin-top:20px">
+    <div class="marquee-track right">
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"Perfect fitting, loved the stitching and embroidery."</p><strong>- Hiba R., Chennai</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"Fast delivery and packaging was luxury!"</p><strong>- Noor S., Pune</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"My wedding lehenga from here - dream come true."</p><strong>- Mariam L., Kolkata</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★☆</div><p>"Great casual collection for office wear."</p><strong>- Sana K., Jaipur</strong></div>
+      <!-- duplicate -->
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"Perfect fitting, loved the stitching and embroidery."</p><strong>- Hiba R., Chennai</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"Fast delivery and packaging was luxury!"</p><strong>- Noor S., Pune</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★★</div><p>"My wedding lehenga from here - dream come true."</p><strong>- Mariam L., Kolkata</strong></div>
+      <div class="review-box"><div style="color:#b58a52">★★★★☆</div><p>"Great casual collection for office wear."</p><strong>- Sana K., Jaipur</strong></div>
+    </div>
+  </div>
+</section>
+
+<style>
+.marquee{overflow:hidden;white-space:nowrap}
+.marquee-track{display:flex;gap:20px;width:max-content}
+.marquee-track.left{animation:scrollLeft 30s linear infinite}
+.marquee-track.right{animation:scrollRight 30s linear infinite}
+.review-box{min-width:320px;max-width:320px;background:#faf6f0;padding:22px;border:1px solid #dfd0c2;border-radius:10px;white-space:normal;text-align:left}
+.review-box p{font-size:13px;color:#4b342c;margin:10px 0;line-height:1.5;min-height:40px}
+.review-box strong{font-size:12px}
+@keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes scrollRight{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.marquee:hover .marquee-track{animation-play-state:paused}
+</style>
+<!-- MOVING REVIEWS END -->
+    <footer>
+    <div class="footer-grid" style="grid-template-columns: 2fr 1fr 1fr 1fr;">
+        <div>
+            <div class="footer-brand">NIM'S <span>ATELIER</span></div>
+            <p>Pakistani-inspired fashion, thoughtfully curated for women across India.</p><br><p>Elegant. Timeless. Effortlessly Yours.</p>
+            <div class="social-links">
+                <a href="https://instagram.com/nimsatelier" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram" title="Instagram"><span class="instagram-icon">◎</span></a>
+                <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="WhatsApp" title="WhatsApp"><span class="whatsapp-icon">☎</span></a>
+            </div>
+        </div>
+        <div>
+            <h3>Shop</h3>
+            <ul>
+                <li><a href="shop.html">Bridal Wear</a></li>
+                <li><a href="shop.html">Party Wear</a></li>
+                <li><a href="shop.html">Casual Wear</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>Our Policies</h3>
+            <ul>
+                <li><a href="policy.html#shipping">Shipping & Delivery</a></li>
+                <li><a href="policy.html#payment">Payment Options</a></li>
+                <li><a href="policy.html#privacy">Privacy Policy</a></li>
+                <li><a href="policy.html#refunds">Refund Policy</a></li>
+                <li><a href="policy.html#terms">Terms of Service</a></li>
+                <li><a href="policy.html#faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>Customer Care</h3>
+            <ul>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="track-order.html">Track Order</a></li>
+                <li><a href="profile.html">My Profile</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright">© 2026 Nim's Atelier. All Rights Reserved.</div>
+</footer>
+
+    <script>
+        const signinForm = document.getElementById("signinForm");
+        if (signinForm) {
+            signinForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const email = document.getElementById("signinEmail").value.trim();
+                if (!email) return;
+                document.getElementById("signinMessage").textContent = "✓ Welcome to Nim's Atelier! Use NIM10 at checkout for 10% off.";
+                localStorage.setItem("nimAtelierEmail", email);
+            });
+        }
+        let savedCart = JSON.parse(localStorage.getItem("nimsCart")||"[]");
+        document.getElementById("cartCount").textContent = savedCart.reduce((a,b)=>a+b.qty,0);
+
+        const hero = document.getElementById("home");
+        // FIXED - MATCHES YOUR REAL FILES
+        const images = ["pictures/bridal-1.jpeg", "pictures/party-1.jpg", "pictures/casual-1.jpg"];
+        let current = 0;
+        if (hero) {
+            setInterval(function () {
+                current = (current + 1) % images.length;
+                hero.style.backgroundImage = `linear-gradient(rgba(35,24,23,.42), rgba(35,24,23,.62)), url("${images[current]}")`;
+            }, 5000);
+        }
+    </script>
+</body>
+
+</html>
